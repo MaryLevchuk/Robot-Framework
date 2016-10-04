@@ -1,0 +1,7 @@
+*** Keywords ***
+Create Session
+    Create Http Context    ${domain}
+
+Set Request Headers
+    Set Request Header    auth-apikey    ${apikey}
+    Set Request Header    Content-Type    application/json

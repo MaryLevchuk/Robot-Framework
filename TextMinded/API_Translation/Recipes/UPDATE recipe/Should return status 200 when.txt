@@ -1,0 +1,38 @@
+*** Settings ***
+Suite Setup       Create Session
+Test Template     Update recipe translation
+Library           HttpLibrary.HTTP
+Library           json
+Resource          ../../../Resources/PreRequisits.txt
+Resource          ../../../Resources/API_Requests.txt
+
+*** Variables ***
+${recipe_id}      3562840668
+
+*** Test Cases ***    KEY                  VALUE
+ID is empty           Id                   ""
+
+ID is 11 digits       Id                   35628406680
+
+ID is 9 digits        Id                   356284066
+
+ID is non-digit       Id                   "qwertyuiop"
+
+ID is null            Id                   null
+
+TranslationStatus is empty
+                      TranslationStatus    ""
+
+TranslationStatus is null
+                      TranslationStatus    null
+
+TranslationStatus is -1
+                      TranslationStatus    -1
+
+TranslationStatus is 4
+                      TranslationStatus    4
+
+TranslationStatus is non-digit
+                      TranslationStatus    "abc"
+
+*** Keywords ***

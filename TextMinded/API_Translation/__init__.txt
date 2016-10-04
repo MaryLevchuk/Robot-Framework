@@ -1,0 +1,14 @@
+*** Settings ***
+Suite Setup       Set Global Variables
+Library           Selenium2Library
+Library           String
+Library           HttpLibrary
+Library           HttpLibrary.HTTP
+Resource          ../Resources/PreRequisits.txt
+Resource          ../Resources/API_Requests.txt
+
+*** Keywords ***
+Set Global Variables
+    Set Global Variable    ${instance}    foodservice-fi
+    Set Global Variable    ${domain}    api.testrdb.arla.com
+    Set Global Variable    ${apikey}    7c0fb1c75f6a4eba87b8d7c1e7faa1e5

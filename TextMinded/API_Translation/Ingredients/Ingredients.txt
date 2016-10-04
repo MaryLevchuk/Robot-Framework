@@ -1,0 +1,30 @@
+*** Settings ***
+Suite Setup       Create Session
+Resource          ../../Resources/PreRequisits.txt
+Library           HttpLibrary.HTTP
+Library           json
+
+*** Test Cases ***
+Get all ingredients to translate
+    Set Request Headers
+    GET    /${instance}/translation/ingredient
+    ${status}=    Get Response Status
+    Should Start With    ${status}    200
+
+Get ingredient to translate by Id
+    Set Request Headers
+    GET    /${instance}/translation/ingredient/3049979266
+    ${status}=    Get Response Status
+    Should Start With    ${status}    200
+
+Update ingredient translation
+    Set Request Headers
+    GET    /${instance}/translation/ingredient/3049979266
+    ${body}=    Get Response Body
+    ${translation}=    Get Json Value    ${body}    /TranslationIngredient
+    ${json_data}=    json.dumps    ${translation}
+    Set Request Headers
+    Set Request Body    ${json_data}
+    POST    /${instance}/translation/ingredient/1432513398
+    ${status}=    Get Response Status
+    Should Start With    ${status}    200

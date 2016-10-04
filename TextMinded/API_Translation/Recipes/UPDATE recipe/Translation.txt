@@ -1,0 +1,14 @@
+*** Settings ***
+Suite Setup       Create Session
+Test Template     Update recipe translation
+Library           HttpLibrary.HTTP
+Library           json
+Resource          ../../../Resources/PreRequisits.txt
+Resource          ../../../Resources/API_Requests.txt
+
+*** Variables ***
+${recipe_id}      3597407520
+
+*** Test Cases ***    KEY                  VALUE
+By ID = 3597407520    [Setup]
+                      TranslationStatus    1

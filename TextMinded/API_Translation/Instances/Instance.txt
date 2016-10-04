@@ -1,0 +1,13 @@
+*** Settings ***
+Suite Setup       Create Session
+Test Template
+Resource          ../../Resources/PreRequisits.txt
+Library           HttpLibrary.HTTP
+Library           json
+
+*** Test Cases ***
+Get translation instance
+    Set Request Headers
+    GET    /translation/instance
+    ${status}=    Get Response Status
+    Should Start With    ${status}    200

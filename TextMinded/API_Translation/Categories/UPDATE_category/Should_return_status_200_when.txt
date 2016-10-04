@@ -1,0 +1,24 @@
+*** Settings ***
+Suite Setup       Create Session
+Test Template     Update category translation
+Library           HttpLibrary.HTTP
+Library           json
+Resource          ../../../Resources/PreRequisits.txt
+Resource          ../../../Resources/API_Requests.txt
+Library           Collections
+
+*** Variables ***
+${category_id}    741717431
+
+*** Test Cases ***    KEY     VALUE
+ID is empty           Id      ""
+
+Name is empty         Name    ""
+
+ID is null            Id      ${null}
+
+Name is null          Name    ${null}
+
+ID is absend          Id      -1
+
+Name is absend        Name    -1

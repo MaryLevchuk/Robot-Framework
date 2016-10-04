@@ -1,0 +1,19 @@
+*** Settings ***
+Suite Setup       Create Session
+Library           HttpLibrary.HTTP
+Library           json
+Resource          ../../Resources/PreRequisits.txt
+Resource          ../../Resources/API_Requests.txt
+
+*** Variables ***
+${category_id}    741717431
+
+*** Test Cases ***
+All translation ingredient categories
+    ${status}=    Get all categories to translate
+    Should Start With    ${status}    200
+
+Category translation by category Id
+    Get category to translate by ID    ${category_id}
+    ${status}=    Get Response Status
+    Should Start With    ${status}    200

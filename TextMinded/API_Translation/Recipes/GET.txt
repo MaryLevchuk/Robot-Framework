@@ -1,0 +1,24 @@
+*** Settings ***
+Suite Setup       Create Session
+Library           HttpLibrary.HTTP
+Library           json
+Resource          ../../Resources/PreRequisits.txt
+Resource          ../../Resources/API_Requests.txt
+
+*** Variables ***
+${recipe_id}      3562840668
+
+*** Test Cases ***
+All recipes to translate
+    [Setup]    Set Request Headers
+    Get all recipes to translate
+    ${status}=    Get Response Status
+    Should Start With    ${status}    200
+
+Recipe to translate by Id
+    [Setup]    Set Request Headers
+    Get recipe to translate by ID    ${recipe_id}
+    ${status}=    Get Response Status
+    Should Start With    ${status}    200
+
+*** Keywords ***
