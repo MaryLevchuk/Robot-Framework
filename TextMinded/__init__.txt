@@ -4,4 +4,3 @@ Library           String
 Library           HttpLibrary
 Library           HttpLibrary.HTTP
 Resource          Resources/PreRequisits.txt
-Resource          Resources/API_Requests.txt

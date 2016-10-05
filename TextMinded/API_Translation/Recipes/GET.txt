@@ -3,7 +3,7 @@ Suite Setup       Create Session
 Library           HttpLibrary.HTTP
 Library           json
 Resource          ../../Resources/PreRequisits.txt
-Resource          ../../Resources/API_Requests.txt
+Resource          ../../Resources/API_Requests/Recipes.txt
 
 *** Variables ***
 ${recipe_id}      3562840668

@@ -1,0 +1,5 @@
+*** Keywords ***
+Get success message
+    ${response}=    Get Response Body
+    ${success}=    Get Json Value    ${response}    /Success
+    [Return]    ${success}

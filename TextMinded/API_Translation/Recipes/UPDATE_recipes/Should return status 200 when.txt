@@ -4,7 +4,8 @@ Test Template     Update recipe translation
 Library           HttpLibrary.HTTP
 Library           json
 Resource          ../../../Resources/PreRequisits.txt
-Resource          ../../../Resources/API_Requests.txt
+Resource          ../../../Resources/API_Requests/Recipes.txt
+Library           Collections
 
 *** Variables ***
 ${recipe_id}      3562840668

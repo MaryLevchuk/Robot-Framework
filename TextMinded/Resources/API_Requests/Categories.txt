@@ -1,0 +1,53 @@
+*** Keywords ***
+Update category field
+    [Arguments]    ${key}    ${value}
+    ${translation}=    Get category translation part
+    ${translated_json}=    Set Json Value    ${translation}    ${key}    ${value}
+    [Return]    ${translated_json}
+
+Update category translation
+    [Arguments]    ${key}    ${value}
+    ${updated_field}=    Run Keyword IF    ${value} == -1    Remove category field    ${key}
+    ...    ELSE IF    ${value} == ${null}    Update category field    /${key}    null
+    ...    ELSE    Update category field    /${key}    ${value}
+    ${status}=    Send category translation    ${updated_field}
+    Should Start With    ${status}    200
+
+Remove category field
+    [Arguments]    ${field_name}
+    Comment    Log    "I'm in Remove field"
+    ${translation_part}=    Get category translation part
+    ${json_string}=    catenate    ${translation_part}
+    ${json}=    evaluate    json.loads('''${json_string}''')    json
+    set to dictionary    ${json}
+    remove from dictionary    ${json}    ${field_name}
+    ${json_string}=    evaluate    json.dumps(${json})    json
+    Comment    log    \nNew JSON string:\n${json_string}
+    [Return]    ${json_string}
+
+Send category translation
+    [Arguments]    ${json_data}
+    Set Request Headers
+    Set Request Body    ${json_data}
+    POST    /${instance}/translation/ingredientcategory/${category_id}
+    ${status}=    Get Response Status
+    ${body}=    Get Response Body
+    [Return]    ${status}
+
+Get category translation part
+    ${response_body}=    Get category to translate by ID    ${category_id}
+    ${translation_part}=    Get Json Value    ${response_body}    /TranslationIngredientCategory
+    [Return]    ${translation_part}
+
+Get category to translate by ID
+    [Arguments]    ${category_id}
+    Set Request Headers
+    GET    /${instance}/translation/ingredientcategory/${category_id}
+    ${response_body}=    Get Response Body
+    [Return]    ${response_body}
+
+Get all categories to translate
+    Set Request Headers
+    GET    /${instance}/translation/ingredientcategory
+    ${status}=    Get Response Status
+    [Return]    ${status}

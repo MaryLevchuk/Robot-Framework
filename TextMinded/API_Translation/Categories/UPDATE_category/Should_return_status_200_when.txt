@@ -4,8 +4,8 @@ Test Template     Update category translation
 Library           HttpLibrary.HTTP
 Library           json
 Resource          ../../../Resources/PreRequisits.txt
-Resource          ../../../Resources/API_Requests.txt
 Library           Collections
+Resource          ../../../Resources/API_Requests/Categories.txt
 
 *** Variables ***
 ${category_id}    741717431

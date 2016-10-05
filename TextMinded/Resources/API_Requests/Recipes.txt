@@ -1,0 +1,43 @@
+*** Keywords ***
+Update recipe translation
+    [Arguments]    ${field_name}    ${value}
+    ${updated_field}=    Run Keyword IF    ${value} == -1    Remove recipe field    ${field_name}
+    ...    ELSE IF    ${value} == ${null}    Update recipe field    /${field_name}    null
+    ...    ELSE    Update recipe field    /${field_name}    ${value}
+    ${status}=    Send recipe translation    ${updated_field}
+    Should Start With    ${status}    200
+
+Update recipe field
+    [Arguments]    ${key}    ${value}
+    ${translation}=    Get recipe translation part
+    ${translated_json}=    Set Json Value    ${translation}    ${key}    ${value}
+    [Return]    ${json_data}
+
+Get recipe to translate by ID
+    [Arguments]    ${recipe_id}
+    Set Request Headers
+    GET    /${instance}/translation/recipe/${recipe_id}
+    ${response_body}=    Get Response Body
+    [Return]    ${response_body}
+
+Get recipe translation part
+    ${response_body}=    Get recipe to translate by ID    ${recipe_id}
+    ${translation_part}=    Get Json Value    ${response_body}    /TranslateRecipe
+    [Return]    ${translation_part}
+
+Get all recipes to translate
+    Set Request Headers
+    GET    /${instance}/translation/recipe
+    Get Response Body
+
+Remove recipe field
+    [Arguments]    ${field_name}
+    Comment    Log    "I'm in Remove field"
+    ${translation_part}=    Get recipe translation part
+    ${json_string}=    catenate    ${translation_part}
+    ${json}=    evaluate    json.loads('''${json_string}''')    json
+    set to dictionary    ${json}
+    remove from dictionary    ${json}    ${field_name}
+    ${json_string}=    evaluate    json.dumps(${json})    json
+    Comment    log    \nNew JSON string:\n${json_string}
+    [Return]    ${json_string}
