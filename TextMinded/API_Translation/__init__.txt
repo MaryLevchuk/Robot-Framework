@@ -11,3 +11,6 @@ Set Global Variables
     Set Global Variable    ${instance}    foodservice-fi
     Set Global Variable    ${domain}    api.testrdb.arla.com
     Set Global Variable    ${apikey}    7c0fb1c75f6a4eba87b8d7c1e7faa1e5
+    Set Global Variable    ${recipe_id}    3562840668
+    Set Global Variable    ${category_id}    741717431
+    Set Global Variable    ${ingredient_id}    3049979266

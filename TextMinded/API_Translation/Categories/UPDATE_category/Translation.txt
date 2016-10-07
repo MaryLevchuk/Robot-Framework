@@ -6,7 +6,6 @@ Resource          ../../../Resources/PreRequisits.txt
 Resource          ../../../Resources/API_Requests/Categories.txt
 
 *** Variables ***
-${category_id}    741717431
 
 *** Test Cases ***
 By ID

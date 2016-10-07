@@ -3,16 +3,16 @@ Suite Setup       Create Session
 Resource          ../../Resources/PreRequisits.txt
 Library           HttpLibrary.HTTP
 Library           json
+Resource          ../../Resources/API_Requests/Ingredients.txt
+Library           Collections
+Library           String
 
 *** Test Cases ***
-All ingredients to translate
-    Set Request Headers
-    GET    /${instance}/translation/ingredient
-    ${status}=    Get Response Status
+All translation ingredients
+    ${status}=    Get all ingredients to translate
     Should Start With    ${status}    200
 
-Ingredient to translate by ID
-    Set Request Headers
-    GET    /${instance}/translation/ingredient/3049979266
+Ingredient translation by ID
+    Get ingredient to translate by ID    ${ingredient_id}
     ${status}=    Get Response Status
     Should Start With    ${status}    200

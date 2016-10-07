@@ -1,0 +1,14 @@
+*** Settings ***
+Suite Setup       Create Session
+Resource          ../../Resources/API_Requests/Recipes.txt
+Resource          ../../Resources/PreRequisits.txt
+Library           HttpLibrary.HTTP
+Library           json
+Library           Collections
+Library           String
+
+*** Test Cases ***
+Bunch
+    ${body}=    Get all recipes to translate
+    Log    TAKING RECIPE TRANSLATION PART
+    ${translation_part}=    Get Json Value    ${body}    /TranslationRecipe[0]

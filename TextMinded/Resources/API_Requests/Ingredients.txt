@@ -1,0 +1,52 @@
+*** Keywords ***
+Update ingredient field
+    [Arguments]    ${key}    ${value}
+    ${translation}=    Get ingredient translation part
+    ${translated_json}=    Set Json Value    ${translation}    ${key}    ${value}
+    [Return]    ${translated_json}
+
+Update ingredient translation
+    [Arguments]    ${key}    ${value}
+    ${updated_field}=    Run Keyword IF    ${value} == -1    Remove ingredient field    ${key}
+    ...    ELSE IF    ${value} == ${null}    Update ingredient field    /${key}    null
+    ...    ELSE    Update ingredient field    /${key}    ${value}
+    ${status}=    Send ingredient translation    ${updated_field}
+    Should Start With    ${status}    200
+
+Remove ingredient field
+    [Arguments]    ${field_name}
+    Comment    Log    "I'm in Remove field"
+    ${translation_part}=    Get ingredient translation part
+    ${json_string}=    catenate    ${translation_part}
+    ${json}=    evaluate    json.loads('''${json_string}''')    json
+    set to dictionary    ${json}
+    remove from dictionary    ${json}    ${field_name}
+    ${json_string}=    evaluate    json.dumps(${json})    json
+    Comment    log    \nNew JSON string:\n${json_string}
+    [Return]    ${json_string}
+
+Send ingredient translation
+    [Arguments]    ${json_data}
+    Set Request Headers
+    Set Request Body    ${json_data}
+    POST    /${instance}/translation/ingredientcategory/${ingredient_id}
+    ${status}=    Get Response Status
+    ${body}=    Get Response Body
+    [Return]    ${status}
+
+Get ingredient translation part
+    ${response_body}=    Get ingredient to translate by ID    ${ingredient_id}
+    ${translation_part}=    Get Json Value    ${response_body}    /TranslationIngredient
+    [Return]    ${translation_part}
+
+Get ingredient to translate by ID
+    Set Request Headers
+    GET    /${instance}/translation/ingredient/${ingredient_id}
+    ${status}=    Get Response Status
+    [Return]    ${status}
+
+Get all ingredients to translate
+    Set Request Headers
+    GET    /${instance}/translation/ingredient
+    ${status}=    Get Response Status
+    [Return]    ${status}

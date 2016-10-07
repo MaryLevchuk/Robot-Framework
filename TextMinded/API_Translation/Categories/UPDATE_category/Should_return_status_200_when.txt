@@ -8,7 +8,6 @@ Library           Collections
 Resource          ../../../Resources/API_Requests/Categories.txt
 
 *** Variables ***
-${category_id}    741717431
 
 *** Test Cases ***    KEY     VALUE
 ID is empty           Id      ""

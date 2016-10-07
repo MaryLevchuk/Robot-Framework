@@ -5,10 +5,10 @@ Library           HttpLibrary.HTTP
 Library           json
 Resource          ../../../Resources/PreRequisits.txt
 Resource          ../../../Resources/API_Requests/Recipes.txt
+Library           String
 
 *** Variables ***
-${recipe_id}      3597407520
 
 *** Test Cases ***    KEY                  VALUE
-By ID = 3597407520    [Setup]
+By ID = 3562840668    [Setup]
                       TranslationStatus    1

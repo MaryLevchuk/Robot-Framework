@@ -9,30 +9,34 @@ Update recipe translation
 
 Update recipe field
     [Arguments]    ${key}    ${value}
+    Log    UPDATING RECIPE FIELD
     ${translation}=    Get recipe translation part
     ${translated_json}=    Set Json Value    ${translation}    ${key}    ${value}
-    [Return]    ${json_data}
+    [Return]    ${translated_json}
 
 Get recipe to translate by ID
     [Arguments]    ${recipe_id}
     Set Request Headers
+    Log    GETTING RECIPE TO TRANSLATE BY ID
     GET    /${instance}/translation/recipe/${recipe_id}
     ${response_body}=    Get Response Body
     [Return]    ${response_body}
 
 Get recipe translation part
+    Log    TAKING RECIPE TRANSLATION PART
     ${response_body}=    Get recipe to translate by ID    ${recipe_id}
-    ${translation_part}=    Get Json Value    ${response_body}    /TranslateRecipe
+    ${translation_part}=    Get Json Value    ${response_body}    /TranslationRecipe
     [Return]    ${translation_part}
 
 Get all recipes to translate
     Set Request Headers
     GET    /${instance}/translation/recipe
-    Get Response Body
+    ${response_body}=    Get Response Body
+    [Return]    ${response_body}
 
 Remove recipe field
     [Arguments]    ${field_name}
-    Comment    Log    "I'm in Remove field"
+    Log    "I'm in Remove field"
     ${translation_part}=    Get recipe translation part
     ${json_string}=    catenate    ${translation_part}
     ${json}=    evaluate    json.loads('''${json_string}''')    json
@@ -41,3 +45,15 @@ Remove recipe field
     ${json_string}=    evaluate    json.dumps(${json})    json
     Comment    log    \nNew JSON string:\n${json_string}
     [Return]    ${json_string}
+
+Send recipe translation
+    [Arguments]    ${json_data}
+    Set Request Headers
+    Log    SENDING RECIPE TRANSLATION PART
+    ${json_string}=    catenate    ${json_data}
+    ${bytes}=    Encode String To Bytes    ${json_string}    ASCII    errors=ignore
+    Set Request Body    ${bytes}
+    POST    /${instance}/translation/recipe/${recipe_id}
+    ${status}=    Get Response Status
+    ${body}=    Get Response Body
+    [Return]    ${status}

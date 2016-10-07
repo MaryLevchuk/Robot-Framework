@@ -6,9 +6,9 @@ Library           json
 Resource          ../../../Resources/PreRequisits.txt
 Resource          ../../../Resources/API_Requests/Recipes.txt
 Library           Collections
+Library           String
 
 *** Variables ***
-${recipe_id}      3562840668
 
 *** Test Cases ***    KEY                  VALUE
 ID is empty           Id                   ""
@@ -19,16 +19,16 @@ ID is 9 digits        Id                   356284066
 
 ID is non-digit       Id                   "qwertyuiop"
 
-ID is null            Id                   null
+ID is null            Id                   ${null}
 
 TranslationStatus is empty
                       TranslationStatus    ""
 
 TranslationStatus is null
-                      TranslationStatus    null
+                      TranslationStatus    ${null}
 
-TranslationStatus is -1
-                      TranslationStatus    -1
+TranslationStatus is -2
+                      TranslationStatus    -2
 
 TranslationStatus is 4
                       TranslationStatus    4

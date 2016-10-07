@@ -2,14 +2,3 @@
 Test Template     Update ingredient translation
 
 *** Test Cases ***
-Update ingredient translation
-    Set Request Headers
-    GET    /${instance}/translation/ingredient/3049979266
-    ${body}=    Get Response Body
-    ${translation}=    Get Json Value    ${body}    /TranslationIngredient
-    ${json_data}=    json.dumps    ${translation}
-    Set Request Headers
-    Set Request Body    ${json_data}
-    POST    /${instance}/translation/ingredient/1432513398
-    ${status}=    Get Response Status
-    Should Start With    ${status}    200
