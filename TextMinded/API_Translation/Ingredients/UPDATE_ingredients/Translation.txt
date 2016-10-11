@@ -1,1 +1,12 @@
-*** Test Cases ***
+*** Settings ***
+Suite Setup       Create session
+Test Template     Update ingredient translation
+Resource          ../../../Resources/API_Requests/Ingredients.txt
+Resource          ../../../Resources/PreRequisits.txt
+Library           HttpLibrary.HTTP
+Library           json
+Library           Collections
+Library           String
+
+*** Test Cases ***    KEY     VALUE
+By ingredient ID      Tags    "sweet"

@@ -40,10 +40,11 @@ Get ingredient translation part
     [Return]    ${translation_part}
 
 Get ingredient to translate by ID
+    [Arguments]    ${ingredient_id}
     Set Request Headers
     GET    /${instance}/translation/ingredient/${ingredient_id}
-    ${status}=    Get Response Status
-    [Return]    ${status}
+    ${response_body}=    Get Response Body
+    [Return]    ${response_body}
 
 Get all ingredients to translate
     Set Request Headers

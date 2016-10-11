@@ -1,20 +1,14 @@
 *** Settings ***
 Suite Setup       Create session
+Test Template     Update category translation
 Library           HttpLibrary.HTTP
 Library           json
 Resource          ../../../Resources/PreRequisits.txt
 Resource          ../../../Resources/API_Requests/Categories.txt
+Library           Collections
+Library           String
 
 *** Variables ***
 
-*** Test Cases ***
-By ID
-    Set Request Headers
-    GET    /${instance}/translation/ingredientcategory/741717431
-    ${body}=    Get Response Body
-    ${translation}=    Get Json Value    ${body}    /TranslationIngredientCategory
-    Set Request Headers
-    Set Request Body    ${translation}
-    POST    /${instance}/translation/ingredientcategory/741717431
-    ${status}=    Get Response Status
-    Should Start With    ${status}    200
+*** Test Cases ***    KEY     VALUE
+By category ID        Name    "Siirtomaatyyli (muu kuin ruoka) 1"
