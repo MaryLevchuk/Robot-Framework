@@ -14,3 +14,4 @@ Set Global Variables
     Set Global Variable    ${recipe_id}    3562840668
     Set Global Variable    ${category_id}    741717431
     Set Global Variable    ${ingredient_id}    3049979266
+    Set Global Variable    ${unit_id}    357808874

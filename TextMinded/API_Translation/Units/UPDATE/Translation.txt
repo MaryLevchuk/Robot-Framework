@@ -1,0 +1,20 @@
+*** Settings ***
+Suite Setup       Create Session
+Resource          ../../../Resources/API_Requests/Units.txt
+Resource          ../../../Resources/PreRequisits.txt
+Library           HttpLibrary.HTTP
+Library           json
+Library           Collections
+
+*** Test Cases ***
+Update unit translation
+    Set Request Headers
+    GET    /${instance}/translation/unit/${unit_id}
+    ${body}=    Get Response Body
+    ${translation}=    Get Json Value    ${body}    /TranslationUnit
+    ${json_data}=    json.dumps    ${translation}
+    Set Request Headers
+    Set Request Body    ${json_data}
+    POST    /${instance}/translation/unit/3529658808
+    ${status}=    Get Response Status
+    Should Start With    ${status}    200

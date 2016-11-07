@@ -1,0 +1,53 @@
+*** Keywords ***
+Update unit field
+    [Arguments]    ${key}    ${value}
+    ${translation}=    Get unit translation part
+    ${translated_json}=    Set Json Value    ${translation}    ${key}    ${value}
+    [Return]    ${translated_json}
+
+Update unit translation
+    [Arguments]    ${key}    ${value}
+    ${updated_field}=    Run Keyword IF    ${value} == -1    Remove unit field    ${key}
+    ...    ELSE IF    ${value} == ${null}    Update unit field    /${key}    null
+    ...    ELSE    Update unit field    /${key}    ${value}
+    ${status}=    Send unit translation    ${updated_field}
+    Should Start With    ${status}    200
+
+Remove unit field
+    [Arguments]    ${field_name}
+    Comment    Log    "I'm in Remove field"
+    ${translation_part}=    Get unit translation part
+    ${json_string}=    catenate    ${translation_part}
+    ${json}=    evaluate    json.loads('''${json_string}''')    json
+    set to dictionary    ${json}
+    remove from dictionary    ${json}    ${field_name}
+    ${json_string}=    evaluate    json.dumps(${json})    json
+    Comment    log    \nNew JSON string:\n${json_string}
+    [Return]    ${json_string}
+
+Send unit translation
+    [Arguments]    ${json_data}
+    Set Request Headers
+    Set Request Body    ${json_data}
+    POST    /${instance}/translation/unit/${unit_id}
+    ${status}=    Get Response Status
+    ${body}=    Get Response Body
+    [Return]    ${status}
+
+Get unit translation part
+    ${response_body}=    Get unit to translate by ID    ${ingredient_id}
+    ${translation_part}=    Get Json Value    ${response_body}    /TranslationUnit
+    [Return]    ${translation_part}
+
+Get unit to translate by ID
+    [Arguments]    ${unit_id}
+    Set Request Headers
+    GET    /${instance}/translation/unit/${unit_id}
+    ${response_body}=    Get Response Body
+    [Return]    ${response_body}
+
+Get all units to translate
+    Set Request Headers
+    GET    /${instance}/translation/unit
+    ${status}=    Get Response Status
+    [Return]    ${status}

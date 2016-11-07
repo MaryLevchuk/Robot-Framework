@@ -1,0 +1,10 @@
+*** Settings ***
+Suite Setup       Create Session
+Resource          ../../../Resources/API_Requests/Units.txt
+Resource          ../../../Resources/PreRequisits.txt
+Library           HttpLibrary.HTTP
+Library           json
+Library           Collections
+Library           String
+
+*** Test Cases ***
