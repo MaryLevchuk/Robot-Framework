@@ -15,14 +15,12 @@ Update category translation
 
 Remove category field
     [Arguments]    ${field_name}
-    Comment    Log    "I'm in Remove field"
     ${translation_part}=    Get category translation part
     ${json_string}=    catenate    ${translation_part}
     ${json}=    evaluate    json.loads('''${json_string}''')    json
     set to dictionary    ${json}
     remove from dictionary    ${json}    ${field_name}
     ${json_string}=    evaluate    json.dumps(${json})    json
-    Comment    log    \nNew JSON string:\n${json_string}
     [Return]    ${json_string}
 
 Send category translation

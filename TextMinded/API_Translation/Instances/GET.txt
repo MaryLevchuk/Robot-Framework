@@ -6,7 +6,7 @@ Library           HttpLibrary.HTTP
 Library           json
 
 *** Test Cases ***
-Get translation instance
+Translation instance
     Set Request Headers
     GET    /translation/instance
     ${status}=    Get Response Status

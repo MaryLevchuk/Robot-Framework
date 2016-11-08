@@ -11,8 +11,6 @@ Library           String
 All translatation units
     Set Request Headers
     GET    /${instance}/translation/unit
-    Comment    ${body}=    Get Response Body
-    Comment    ${json_data}=    json.loads    ${body}
     ${status}=    Get Response Status
     Should Start With    ${status}    200
 

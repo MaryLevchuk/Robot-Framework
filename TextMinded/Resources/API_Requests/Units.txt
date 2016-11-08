@@ -15,14 +15,12 @@ Update unit translation
 
 Remove unit field
     [Arguments]    ${field_name}
-    Comment    Log    "I'm in Remove field"
     ${translation_part}=    Get unit translation part
     ${json_string}=    catenate    ${translation_part}
     ${json}=    evaluate    json.loads('''${json_string}''')    json
     set to dictionary    ${json}
     remove from dictionary    ${json}    ${field_name}
     ${json_string}=    evaluate    json.dumps(${json})    json
-    Comment    log    \nNew JSON string:\n${json_string}
     [Return]    ${json_string}
 
 Send unit translation
@@ -35,7 +33,7 @@ Send unit translation
     [Return]    ${status}
 
 Get unit translation part
-    ${response_body}=    Get unit to translate by ID    ${ingredient_id}
+    ${response_body}=    Get unit to translate by ID    ${unit_id}
     ${translation_part}=    Get Json Value    ${response_body}    /TranslationUnit
     [Return]    ${translation_part}
 
