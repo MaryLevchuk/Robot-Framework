@@ -1,0 +1,13 @@
+*** Keywords ***
+Get all properties to translate
+    Set Request Headers
+    GET    /${instance}/translation/property
+    ${status}=    Get Response Status
+    [Return]    ${status}
+
+Get property to translate by ID
+    Set Request Headers
+    Get all properties to translate
+    ${response_body}=    Get Response Body
+    ${json}=    Set To Dictionary    ${response_body}
+    ${field}=    get from dictionary    ${json}    TranslationProperty

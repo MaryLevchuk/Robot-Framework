@@ -1,5 +1,6 @@
 *** Settings ***
 Suite Setup       Create Session
+Force Tags        positive
 Library           HttpLibrary.HTTP
 Library           json
 Resource          ../../Resources/PreRequisits.txt

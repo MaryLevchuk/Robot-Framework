@@ -1,0 +1,18 @@
+*** Settings ***
+Suite Setup       Create session
+Force Tags        positive
+Library           HttpLibrary.HTTP
+Library           json
+Resource          ../../Resources/PreRequisits.txt
+Resource          ../../Resources/API_Requests/Properties.txt
+Library           Collections
+
+*** Test Cases ***
+All translation properties
+    ${status}=    Get all properties to translate
+    Should Start With    ${status}    200
+
+Property to translate by ID
+    Get property to translate by ID
+    ${status}=    Get Response Status
+    Should Start With    ${status}    200
